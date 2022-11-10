@@ -2,7 +2,7 @@ import TeamsTable from "./components/TeamsTable";
 import TeamCard from "./components/TeamCard";
 import { useState } from "react";
 function App() {
-  const [globalActiveState,setGlobalActiveState]=useState(false);
+  const [globalActiveState, setGlobalActiveState] = useState(false);
   const teams = [
     { teamId: 1, points: 999 },
     { teamId: 2, points: 5 },
@@ -12,15 +12,15 @@ function App() {
     { teamId: 6, points: 10 },
     { teamId: 7, points: 12 },
   ];
-  
+
   return (
     <>
       <h1>Solera Teams. Bootcamp 4</h1>
 
-      {teams.map((team) => {
+      {teams.map((team, index) => {
         return (
           <TeamCard
-            key={team.teamID}
+            key={index}
             teamId={team.teamId}
             points={team.points}
             globalActiveState={globalActiveState}

@@ -1,0 +1,45 @@
+.team-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border-radius: 12px;
+    background-color: #413f3f;
+    width: 16%;
+    height: 180px;
+    display: inline-block;
+    margin: 15px;
+  }
+  
+  .team-card h2 {
+    color: #3a3a3a;
+    font-size: 2rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: white;
+    text-align: center;
+  }
+  
+  .team-card__points {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    background-color: #40005d;
+    border: 1px solid white;
+    text-align: center;
+    border-radius: 12px;
+    margin-top: 40px;
+  }
+
+  div {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background-color: #777676;
+  }
+
+  h1 {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  

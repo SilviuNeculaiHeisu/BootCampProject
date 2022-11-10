@@ -8,7 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableRowCustom from "./TableRowCustom";
-
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { Button } from "@mui/material";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -72,21 +73,33 @@ export default function TeamsTable(props) {
     ),
   ];
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="left">Team ID</StyledTableCell>
-            <StyledTableCell align="right">accomplishment</StyledTableCell>
-            <StyledTableCell align="right">Points</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRowCustom row={row}></TableRowCustom>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="left">Team ID</StyledTableCell>
+              <StyledTableCell align="right">accomplishment</StyledTableCell>
+              <StyledTableCell align="right">Points</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRowCustom row={row}></TableRowCustom>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div>
+        <Button
+          sx={{ marginLeft: "50%", color: "black" }}
+          onClick={() => {
+            props.toggleDataTable();
+          }}
+        >
+          <KeyboardBackspaceIcon sx={{ fontSize: "50px", cursor: "pointer" }} />
+        </Button>
+      </div>
+    </>
   );
 }

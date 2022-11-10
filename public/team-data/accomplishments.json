@@ -1,6 +1,6 @@
 [
-    {"teamId": 1, "accomplishment": "They did something amazing", "points": 2},
-    {"teamId": 2, "accomplishment": "They did something amazing", "points": 10},
-    {"teamId": 1, "accomplishment": "They did something amazing", "points": 3},
-    {"teamId": 1, "accomplishment": "They did something amazing", "points": 5},
-];
+  {"teamId": 1, "accomplishment": "They did something amazing", "points": 2},
+  {"teamId": 2, "accomplishment": "They did something amazing", "points": 10},
+  {"teamId": 1, "accomplishment": "They did something amazing", "points": 3},
+  {"teamId": 1, "accomplishment": "They did something amazing", "points": 5}
+]

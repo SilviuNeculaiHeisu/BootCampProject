@@ -9,7 +9,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 
-const AddingForm = ({ setRows, setOpen, teamId }) => {
+const AddingForm = ({ setRows, teamId }) => {
   const [accomplishment, setAccomplishment] = useState("");
   const [points, setPoints] = useState(0);
 

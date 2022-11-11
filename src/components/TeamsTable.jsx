@@ -120,11 +120,7 @@ export default function TeamsTable(props) {
             >
               <div>
                 {" "}
-                <AddingForm
-                  setRows={setRows}
-                  setOpen={setOpen}
-                  teamId={props.teamId}
-                />
+                <AddingForm setRows={setRows} teamId={props.teamId} />
               </div>
             </Modal>
           </Button>

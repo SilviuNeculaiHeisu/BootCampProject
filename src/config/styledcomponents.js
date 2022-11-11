@@ -15,6 +15,8 @@ export const CardContainer = styled(Paper)({
   display: "inline-block",
   margin: "15px",
   cursor: "pointer",
+  ":hover": { backgroundColor: "#D1CCCC" },
+  transition: "all .5s",
 });
 export const TeamName = styled("div")({
   color: "#3a3a3a",

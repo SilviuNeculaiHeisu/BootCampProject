@@ -14,6 +14,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
+  ":hover": { backgroundColor: "#D1CCCC" },
+  transition: "all .5s",
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,

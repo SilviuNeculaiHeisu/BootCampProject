@@ -20,8 +20,8 @@ const AddingForm = ({ setRows, setOpen, teamId }) => {
     transform: "translate(-50%, -50%)",
     width: 500,
     height: 200,
-    bgcolor: "background.paper",
     border: "2px solid #000",
+    backgroundColor: "white",
     boxShadow: 24,
     p: 4,
   };
@@ -62,14 +62,15 @@ const AddingForm = ({ setRows, setOpen, teamId }) => {
             <Button
               variant="contained"
               onClick={() => {
-                setRows((prev) => [
-                  ...prev,
-                  {
-                    teamId: teamId,
-                    accomplishment: accomplishment,
-                    points: points,
-                  },
-                ]);
+                if (accomplishment.trim().length > 0 && points > 0)
+                  setRows((prev) => [
+                    ...prev,
+                    {
+                      teamId: teamId,
+                      accomplishment: accomplishment,
+                      points: points,
+                    },
+                  ]);
               }}
             >
               Add new Task

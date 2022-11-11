@@ -12,10 +12,9 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import AddingForm from "./AddingForm";
+import AddingForm from "./Modals/AddingFormModal";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -44,6 +43,22 @@ export default function TeamsTable(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const deleteRow = (row) => {
+    let tempRows = rows;
+    tempRows = tempRows.filter((currentRow) => row != currentRow);
+    console.log(tempRows);
+    setRows(tempRows);
+  };
+  const changeRow = (row) => {
+    let tempRows = rows;
+    tempRows.forEach((temporaryRow) => {
+      if (row.teamId == temporaryRow.teamId) {
+        temporaryRow.accomplishment = row.accomplishment;
+        temporaryRow.points = row.points;
+      }
+    });
+    setRows(tempRows);
+  };
   const [rows, setRows] = useState([
     createData(
       ` ${props.teamId ? props.teamId : 0}`,
@@ -95,7 +110,7 @@ export default function TeamsTable(props) {
         </Grid>
 
         <Grid item xs={3} md={3}>
-          <Button onClick={handleOpen}>
+          <Button onClick={handleOpen} sx={{ color: "black" }}>
             <AddIcon sx={{ fontSize: "50px", cursor: "pointer" }} />
             <Modal
               open={open}
@@ -116,17 +131,29 @@ export default function TeamsTable(props) {
         </Grid>
       </Grid>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500 }} aria-label="customized table">
+        <Table
+          sx={{ minWidth: 500, maxWidth: "70%", margin: "auto" }}
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">Team ID</StyledTableCell>
-              <StyledTableCell align="right">accomplishment</StyledTableCell>
-              <StyledTableCell align="right">Points</StyledTableCell>
+              <StyledTableCell align="left">
+                Team ID: {props.teamId}
+              </StyledTableCell>
+              <StyledTableCell align="left">accomplishment</StyledTableCell>
+              <StyledTableCell align="left">Points</StyledTableCell>
+              <StyledTableCell align="left">Edit</StyledTableCell>
+              <StyledTableCell align="left">Delete</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRowCustom key={index} row={row}></TableRowCustom>
+              <TableRowCustom
+                key={index}
+                row={row}
+                changeRow={changeRow}
+                deleteRow={deleteRow}
+              />
             ))}
           </TableBody>
         </Table>
@@ -137,6 +164,7 @@ export default function TeamsTable(props) {
             onClick={() => {
               props.toggleDataTable();
             }}
+            sx={{ color: "black" }}
           >
             <KeyboardBackspaceIcon
               sx={{ fontSize: "50px", cursor: "pointer" }}

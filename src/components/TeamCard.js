@@ -1,7 +1,14 @@
 import React from "react";
-import "./TeamCard.css";
 import TeamsTable from "./TeamsTable";
 import { useState } from "react";
+import { Paper } from "@mui/material";
+import { emojis } from "../config/config";
+import { getRandomEmoji } from "../config/config";
+import {
+  CardContainer,
+  TeamName,
+  TeamPoints,
+} from "../config/styledcomponents";
 const TeamCard = ({
   teamId,
   points,
@@ -18,16 +25,18 @@ const TeamCard = ({
     <>
       {isTableActive == false ? (
         globalActiveState == false ? (
-          <div
-            className="team-card"
+          <CardContainer
+            elevation={4}
             onClick={() => {
               setIndexTeam(teamId);
               toggleDataTable();
             }}
           >
-            <h2>{teamId ? teamId : "Team 0"}</h2>
-            <div className="team-card__points">{points ? points : 0}</div>
-          </div>
+            <TeamName>
+              Team {teamId ? teamId : "Team 0"} {getRandomEmoji()}
+            </TeamName>
+            <TeamPoints>{points ? points : 0}</TeamPoints>
+          </CardContainer>
         ) : (
           ""
         )

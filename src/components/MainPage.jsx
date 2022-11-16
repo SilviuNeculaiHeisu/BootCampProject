@@ -9,6 +9,7 @@ const MainPage = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/all`).then((res) => {
       setTeams(res.data);
+      console.log(res.data);
     });
   }, []);
 
@@ -24,7 +25,7 @@ const MainPage = () => {
             key={index}
             teamId={team.id}
             teamName={team.name}
-           points={team.totalPoints}
+            points={team.totalPoints}
             globalActiveState={globalActiveState}
             setGlobalActiveState={setGlobalActiveState}
           />

@@ -7,10 +7,12 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import axios from "axios";
 import React, { useState } from "react";
 
-const AddingForm = ({ setRows, teamId }) => {
+const AddingForm = ({ updateRows, teamId, onClose, open }) => {
   const [accomplishment, setAccomplishment] = useState("");
+
   const [points, setPoints] = useState(0);
   const style = {
     position: "absolute",
@@ -50,6 +52,7 @@ const AddingForm = ({ setRows, teamId }) => {
               aria-describedby="helper-text"
               type="number"
               value={points}
+              placeholder={points != 0 ? "" : "Value must be greater than 0!"}
               onChange={(ev) => {
                 setPoints(ev.target.value);
               }}
@@ -57,19 +60,23 @@ const AddingForm = ({ setRows, teamId }) => {
           </FormControl>
         </Grid>
         <Grid container mt={15} ml={6}>
+          <Grid item xs={3} md={3}></Grid>
           <Grid item xs={5} md={5}>
             <Button
               variant="contained"
+              disabled={points > 0 && accomplishment != "" ? false : true}
               onClick={() => {
-                if (accomplishment.trim().length > 0 && points > 0)
-                  setRows((prev) => [
-                    ...prev,
-                    {
-                      teamId: teamId,
+                if (points > 0 && accomplishment != "") {
+                  axios
+                    .post(`http://localhost:8080/tasks/${teamId}/create`, {
                       accomplishment: accomplishment,
                       points: points,
-                    },
-                  ]);
+                    })
+                    .then((res) => {
+                      updateRows();
+                      onClose();
+                    });
+                }
               }}
             >
               Add new Task

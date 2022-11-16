@@ -36,7 +36,7 @@ const TeamCard = ({
             }}
           >
             <TeamName>
-              Team {teamName ? teamName : "Team 0"} {getRandomEmoji()}
+              {teamName ? teamName : "Team 0"} {getRandomEmoji()}
             </TeamName>
             <TeamPoints>{points ? points : 0}</TeamPoints>
           </CardContainer>

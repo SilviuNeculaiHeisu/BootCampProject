@@ -9,6 +9,7 @@ import { emojis, getRandomEmoji } from "../config/config";
 import { Button } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -32,9 +33,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const TableRowCustom = ({ row, changeRow, deleteRow }) => {
-  const [points, setPoints] = useState(row.points);
-  const [accomplishment, setAccomplishment] = useState(row.accomplishment);
+const TableRowCustom = ({ row, deleteRow }) => {
+  const [points, setPoints] = useState(row != null ? row.points : 0);
+  const [accomplishment, setAccomplishment] = useState(
+    row != null ? row.accomplishment : "No tasks added!"
+  );
   const [isEditing, setIsEditing] = useState(false);
   const startEditing = () => {
     setIsEditing((prev) => !prev);
@@ -44,13 +47,14 @@ const TableRowCustom = ({ row, changeRow, deleteRow }) => {
     deleteRow(row);
   };
   const doneEditing = () => {
-    const newRow = {
-      teamId: row.teamId,
+    
+    const newTask = {
+      id: row.id,
       accomplishment: accomplishment,
       points: points,
     };
-    console.log("HERE");
-    changeRow(newRow);
+    axios.patch()
+
     setIsEditing(false);
   };
   return (
@@ -58,52 +62,57 @@ const TableRowCustom = ({ row, changeRow, deleteRow }) => {
       <StyledTableCell component="th" scope="row">
         {emoji}
       </StyledTableCell>
-
-      <StyledTableCell align="left">
-        {isEditing == false ? (
-          row.accomplishment
-        ) : (
-          <input
-            type="text"
-            value={accomplishment}
-            onChange={(ev) => {
-              setAccomplishment(ev.target.value);
-            }}
-          ></input>
-        )}
-      </StyledTableCell>
-      <StyledTableCell align="left">
-        {isEditing == false ? (
-          row.points
-        ) : (
-          <input
-            type="number"
-            value={points}
-            onChange={(ev) => {
-              setPoints(ev.target.value);
-            }}
-          ></input>
-        )}
-      </StyledTableCell>
-
-      <StyledTableCell>
-        {isEditing == false ? (
-          <Button sx={{ color: "black" }} onClick={startEditing}>
-            {" "}
-            <EditIcon />{" "}
-          </Button>
-        ) : (
-          <Button sx={{ color: "green" }} onClick={doneEditing}>
-            {" "}
-            <DoneIcon />{" "}
-          </Button>
-        )}
-      </StyledTableCell>
-      <StyledTableCell component="th" scope="row">
-        <Button sx={{ color: "#ff5136" }} onClick={deleteCurrentRow}>
-          <DeleteIcon />
-        </Button>
-      </StyledTableCell>
+      {row != null ? (
+        <>
+          {" "}
+          <StyledTableCell align="left">
+            {isEditing == false ? (
+              row.accomplishment
+            ) : (
+              <input
+                type="text"
+                value={accomplishment}
+                onChange={(ev) => {
+                  setAccomplishment(ev.target.value);
+                }}
+              ></input>
+            )}
+          </StyledTableCell>
+          <StyledTableCell align="left">
+            {isEditing == false ? (
+              row.points
+            ) : (
+              <input
+                type="number"
+                value={points}
+                onChange={(ev) => {
+                  setPoints(ev.target.value);
+                }}
+              ></input>
+            )}
+          </StyledTableCell>
+          <StyledTableCell>
+            {isEditing == false ? (
+              <Button sx={{ color: "black" }} onClick={startEditing} >
+                {" "}
+                <EditIcon />{" "}
+              </Button>
+            ) : (
+              <Button sx={{ color: "green" }} onClick={doneEditing} disabled={points>0 || accomplishment!=""?false:true}>
+                {" "}
+                <DoneIcon />{" "}
+              </Button>
+            )}
+          </StyledTableCell>
+          <StyledTableCell component="th" scope="row">
+            <Button sx={{ color: "#ff5136" }} onClick={deleteCurrentRow}>
+              <DeleteIcon />
+            </Button>
+          </StyledTableCell>
+        </>
+      ) : (
+        <StyledTableCell>No tasks available</StyledTableCell>
+      )}
     </StyledTableRow>
   );
 };

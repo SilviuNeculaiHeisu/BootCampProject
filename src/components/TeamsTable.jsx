@@ -42,32 +42,26 @@ function createData(teamName, accomplishment, points) {
 }
 
 export default function TeamsTable(props) {
-  const updateRows=()=>{
+  const updateRows = () => {
     axios.get(`http://localhost:8080/tasks/${props.teamId}`).then((res) => {
-      setRows(res.data);
-      
-    
+      if (res.data != null) {
+        setRows(res.data);
+        console.log(res.data);
+      }
     });
-  }
+  };
   const [rows, setRows] = useState([]);
   useEffect(() => {
     updateRows();
-  }, [rows]);
+  }, []);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const deleteRow = (row) => {
-   axios.delete()
-  };
-  const changeRow = (row) => {
-    let tempRows = rows;
-    tempRows.forEach((temporaryRow) => {
-      if (row.teamName == temporaryRow.teamName) {
-        temporaryRow.accomplishment = row.accomplishment;
-        temporaryRow.points = row.points;
-      }
+    axios.delete(`http://localhost:8080/tasks/delete/${row.id}`).then((res) => {
+      console.log(res.data);
+      updateRows();
     });
-    setRows(tempRows);
   };
 
   return (
@@ -94,7 +88,13 @@ export default function TeamsTable(props) {
             >
               <div>
                 {" "}
-                <AddingForm setRows={setRows} teamName={props.teamName} />
+                <AddingForm
+                  updateRows={updateRows}
+                  teamName={props.teamName}
+                  teamId={props.teamId}
+                  open={open}
+                  onClose={handleClose}
+                />
               </div>
             </Modal>
           </Button>
@@ -118,12 +118,7 @@ export default function TeamsTable(props) {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRowCustom
-                key={index}
-                row={row}
-                changeRow={changeRow}
-                deleteRow={deleteRow}
-              />
+              <TableRowCustom key={index} row={row} deleteRow={deleteRow} />
             ))}
           </TableBody>
         </Table>

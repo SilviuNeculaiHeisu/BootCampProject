@@ -15,6 +15,8 @@ import AddIcon from "@mui/icons-material/Add";
 import AddingForm from "./Modals/AddingFormModal";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
+import axios from "axios";
+import { useEffect } from "react";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -35,67 +37,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(teamId, accomplishment, points) {
-  return { teamId, accomplishment, points };
+function createData(teamName, accomplishment, points) {
+  return { teamName, accomplishment, points };
 }
 
 export default function TeamsTable(props) {
+  const updateRows=()=>{
+    axios.get(`http://localhost:8080/tasks/${props.teamId}`).then((res) => {
+      setRows(res.data);
+      
+    
+    });
+  }
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    updateRows();
+  }, [rows]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const deleteRow = (row) => {
-    let tempRows = rows;
-    tempRows = tempRows.filter((currentRow) => row != currentRow);
-    console.log(tempRows);
-    setRows(tempRows);
+   axios.delete()
   };
   const changeRow = (row) => {
     let tempRows = rows;
     tempRows.forEach((temporaryRow) => {
-      if (row.teamId == temporaryRow.teamId) {
+      if (row.teamName == temporaryRow.teamName) {
         temporaryRow.accomplishment = row.accomplishment;
         temporaryRow.points = row.points;
       }
     });
     setRows(tempRows);
   };
-  const [rows, setRows] = useState([
-    createData(
-      ` ${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      2
-    ),
-    createData(
-      ` ${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      10
-    ),
-    createData(
-      `${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      5
-    ),
-    createData(
-      ` ${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      6
-    ),
-    createData(
-      `${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      3
-    ),
-    createData(
-      ` ${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      5
-    ),
-    createData(
-      `${props.teamId ? props.teamId : 0}`,
-      "They did something amazing",
-      2
-    ),
-  ]);
+
   return (
     <>
       <Grid container>
@@ -120,7 +94,7 @@ export default function TeamsTable(props) {
             >
               <div>
                 {" "}
-                <AddingForm setRows={setRows} teamId={props.teamId} />
+                <AddingForm setRows={setRows} teamName={props.teamName} />
               </div>
             </Modal>
           </Button>
@@ -134,7 +108,7 @@ export default function TeamsTable(props) {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">
-                Team ID: {props.teamId}
+                Team ID: {props.teamName}
               </StyledTableCell>
               <StyledTableCell align="left">accomplishment</StyledTableCell>
               <StyledTableCell align="left">Points</StyledTableCell>

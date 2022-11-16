@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TeamsTable from "./TeamsTable";
 import { useState } from "react";
 import { Paper } from "@mui/material";
@@ -9,11 +9,13 @@ import {
   TeamName,
   TeamPoints,
 } from "../config/styledcomponents";
+import axios from "axios";
 const TeamCard = ({
-  teamId,
-  points,
+  teamName,
   globalActiveState,
   setGlobalActiveState,
+  teamId,
+  points,
 }) => {
   const [isTableActive, setIsTableActive] = useState(false);
   const [indexTeam, setIndexTeam] = useState(0);
@@ -21,6 +23,7 @@ const TeamCard = ({
     setIsTableActive((prev) => !prev);
     setGlobalActiveState((prev) => !prev);
   };
+
   return (
     <>
       {isTableActive == false ? (
@@ -28,12 +31,12 @@ const TeamCard = ({
           <CardContainer
             elevation={4}
             onClick={() => {
-              setIndexTeam(teamId);
+              setIndexTeam(teamName);
               toggleDataTable();
             }}
           >
             <TeamName>
-              Team {teamId ? teamId : "Team 0"} {getRandomEmoji()}
+              Team {teamName ? teamName : "Team 0"} {getRandomEmoji()}
             </TeamName>
             <TeamPoints>{points ? points : 0}</TeamPoints>
           </CardContainer>

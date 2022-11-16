@@ -12,7 +12,6 @@ import React, { useState } from "react";
 const AddingForm = ({ setRows, teamId }) => {
   const [accomplishment, setAccomplishment] = useState("");
   const [points, setPoints] = useState(0);
-
   const style = {
     position: "absolute",
     top: "50%",

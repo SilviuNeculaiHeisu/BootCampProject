@@ -18,6 +18,7 @@ export const CardContainer = styled(Paper)({
   ":hover": { backgroundColor: "#D1CCCC" },
   transition: "all .5s",
 });
+
 export const TeamName = styled("div")({
   color: "#3a3a3a",
   fontSize: "2rem",
@@ -27,6 +28,7 @@ export const TeamName = styled("div")({
   textAlign: " center",
   fontFamily: "Noto Serif, serif",
 });
+
 export const TeamPoints = styled(Typography)({
   fontSize: " 2.5rem",
   fontWeight: "bold",

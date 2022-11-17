@@ -50,6 +50,7 @@ export default function TeamsTable(props) {
       }
     });
   };
+  console.log(props.teamName);
   const [rows, setRows] = useState([]);
   useEffect(() => {
     updateRows();
@@ -57,12 +58,7 @@ export default function TeamsTable(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const deleteRow = (row) => {
-    axios.delete(`http://localhost:8080/tasks/delete/${row.id}`).then((res) => {
-      console.log(res.data);
-      updateRows();
-    });
-  };
+
 
   return (
     <>
@@ -108,7 +104,7 @@ export default function TeamsTable(props) {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">
-                Team ID: {props.teamName}
+                Team Name: {props.teamName}
               </StyledTableCell>
               <StyledTableCell align="left">accomplishment</StyledTableCell>
               <StyledTableCell align="left">Points</StyledTableCell>
@@ -121,8 +117,10 @@ export default function TeamsTable(props) {
               <TableRowCustom
                 key={index}
                 row={row}
-                deleteRow={deleteRow}
+               
                 updateRows={updateRows}
+                teamId={props.teamId}
+                getTeams={props.getTeams}
               />
             ))}
           </TableBody>
@@ -133,6 +131,7 @@ export default function TeamsTable(props) {
           <Button
             onClick={() => {
               props.toggleDataTable();
+              props.getTeams();
             }}
             sx={{ color: "black" }}
           >

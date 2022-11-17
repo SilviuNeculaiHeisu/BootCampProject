@@ -4,9 +4,7 @@ import TeamCard from "./TeamCard";
 import axios from "axios";
 const MainPage = () => {
   const [globalActiveState, setGlobalActiveState] = useState(false);
-
-  const [teams, setTeams] = useState([]);
-  useEffect(() => {
+  const getTeams = () => {
     axios.get(`http://localhost:8080/all`).then((res) => {
       setTeams(
         res.data.sort((a, b) => {
@@ -20,6 +18,10 @@ const MainPage = () => {
         })
       );
     });
+  };
+  const [teams, setTeams] = useState([]);
+  useEffect(() => {
+    getTeams();
   }, []);
 
   return (
@@ -37,6 +39,7 @@ const MainPage = () => {
             points={team.totalPoints}
             globalActiveState={globalActiveState}
             setGlobalActiveState={setGlobalActiveState}
+            getTeams={getTeams}
           />
         );
       })}

@@ -33,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const TableRowCustom = ({ row, deleteRow, updateRows }) => {
+const TableRowCustom = ({ row, updateRows, teamId, getTeams }) => {
   const [points, setPoints] = useState(row != null ? row.points : 0);
   const [accomplishment, setAccomplishment] = useState(
     row != null ? row.accomplishment : "No tasks added!"
@@ -41,6 +41,14 @@ const TableRowCustom = ({ row, deleteRow, updateRows }) => {
   const [isEditing, setIsEditing] = useState(false);
   const startEditing = () => {
     setIsEditing((prev) => !prev);
+  };
+  const deleteRow = (row) => {
+    axios
+      .delete(`http://localhost:8080/tasks/delete/${row.id}/${teamId}`)
+      .then((res) => {
+        console.log(res.data);
+        updateRows();
+      });
   };
   const emoji = getRandomEmoji();
   const deleteCurrentRow = () => {
@@ -52,13 +60,17 @@ const TableRowCustom = ({ row, deleteRow, updateRows }) => {
         accomplishment: accomplishment,
         points: points,
       };
-      setPoints(row.points);
+      setPoints(points);
 
-      setAccomplishment(row.accomplishment);
+      setAccomplishment(accomplishment);
       axios
-        .patch(`http://localhost:8080/tasks/update/${row.id}`, newTask)
+        .patch(
+          `http://localhost:8080/tasks/update/${row.id}/${teamId}`,
+          newTask
+        )
         .then((res) => {
           updateRows();
+          getTeams();
         });
     }
     setIsEditing(false);

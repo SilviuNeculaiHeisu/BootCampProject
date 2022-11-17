@@ -15,7 +15,9 @@ const TeamCard = ({
   globalActiveState,
   setGlobalActiveState,
   teamId,
+
   points,
+  getTeams,
 }) => {
   const [isTableActive, setIsTableActive] = useState(false);
   const [indexTeam, setIndexTeam] = useState(0);
@@ -44,7 +46,12 @@ const TeamCard = ({
           ""
         )
       ) : (
-        <TeamsTable teamId={teamId} toggleDataTable={toggleDataTable} />
+        <TeamsTable
+          teamId={teamId}
+          toggleDataTable={toggleDataTable}
+          getTeams={getTeams}
+          teamName={teamName}
+        />
       )}
     </>
   );

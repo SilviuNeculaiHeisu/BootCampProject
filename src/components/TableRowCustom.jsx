@@ -33,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const TableRowCustom = ({ row, deleteRow }) => {
+const TableRowCustom = ({ row, deleteRow, updateRows }) => {
   const [points, setPoints] = useState(row != null ? row.points : 0);
   const [accomplishment, setAccomplishment] = useState(
     row != null ? row.accomplishment : "No tasks added!"
@@ -47,14 +47,20 @@ const TableRowCustom = ({ row, deleteRow }) => {
     deleteRow(row);
   };
   const doneEditing = () => {
-    
-    const newTask = {
-      id: row.id,
-      accomplishment: accomplishment,
-      points: points,
-    };
-    axios.patch()
+    if (row.accomplishment != accomplishment || row.points != points) {
+      const newTask = {
+        accomplishment: accomplishment,
+        points: points,
+      };
+      setPoints(row.points);
 
+      setAccomplishment(row.accomplishment);
+      axios
+        .patch(`http://localhost:8080/tasks/update/${row.id}`, newTask)
+        .then((res) => {
+          updateRows();
+        });
+    }
     setIsEditing(false);
   };
   return (
@@ -93,12 +99,16 @@ const TableRowCustom = ({ row, deleteRow }) => {
           </StyledTableCell>
           <StyledTableCell>
             {isEditing == false ? (
-              <Button sx={{ color: "black" }} onClick={startEditing} >
+              <Button sx={{ color: "black" }} onClick={startEditing}>
                 {" "}
                 <EditIcon />{" "}
               </Button>
             ) : (
-              <Button sx={{ color: "green" }} onClick={doneEditing} disabled={points>0 || accomplishment!=""?false:true}>
+              <Button
+                sx={{ color: "green" }}
+                onClick={doneEditing}
+                disabled={points > 0 || accomplishment != "" ? false : true}
+              >
                 {" "}
                 <DoneIcon />{" "}
               </Button>

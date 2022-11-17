@@ -118,7 +118,12 @@ export default function TeamsTable(props) {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRowCustom key={index} row={row} deleteRow={deleteRow} />
+              <TableRowCustom
+                key={index}
+                row={row}
+                deleteRow={deleteRow}
+                updateRows={updateRows}
+              />
             ))}
           </TableBody>
         </Table>

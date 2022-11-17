@@ -8,8 +8,17 @@ const MainPage = () => {
   const [teams, setTeams] = useState([]);
   useEffect(() => {
     axios.get(`http://localhost:8080/all`).then((res) => {
-      setTeams(res.data);
-      console.log(res.data);
+      setTeams(
+        res.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        })
+      );
     });
   }, []);
 
